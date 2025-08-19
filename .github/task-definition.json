@@ -1,0 +1,23 @@
+{
+  "family": "my-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "my-container",
+      "image": "540490923739.dkr.ecr.us-east-1.amazonaws.com/do-with-aws-docker:httpd",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}
