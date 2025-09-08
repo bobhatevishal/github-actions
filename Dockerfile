@@ -13,9 +13,6 @@ ENV NODE_ENV=production \
 WORKDIR /app
 
 # Copy node_modules from base layer and app source
-COPY --from=base /app/node_modules /app/node_modules
-COPY package.json /app/package.json
-COPY app.js /app/app.js
 COPY . .
 
 EXPOSE 8080
