@@ -16,6 +16,7 @@ WORKDIR /app
 COPY --from=base /app/node_modules /app/node_modules
 COPY package.json /app/package.json
 COPY app.js /app/app.js
+COPY . .
 
 EXPOSE 8080
 USER node
