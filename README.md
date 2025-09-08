@@ -21,7 +21,9 @@ GitHub Secrets configured
 - In Repo → Settings → Secrets → Actions, add:
    - AWS_ACCESS_KEY_ID
    - AWS_SECRET_ACCESS_KEY
-   - 
+   - <img width="1920" height="796" alt="env veriable" src="https://github.com/user-attachments/assets/350e188b-b10d-4005-b671-b9162bca816f" />
+
+
 
 ---
 🔄 Deployment Flow
@@ -31,8 +33,8 @@ GitHub Secrets configured
 - Image is pushed to ECR
 - ECS task definition is updated
 - ECS service pulls and runs the new image
----
 <img width="1918" height="960" alt="complet-cicd-workflow" src="https://github.com/user-attachments/assets/cb646276-441c-4024-9d0d-b85b7d0d973b" />
+---
 
 🌐 Accessing the Application
 
