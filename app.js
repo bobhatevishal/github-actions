@@ -6,71 +6,88 @@ const VERSION = process.env.APP_VERSION || "1.0.0";
 
 app.use(express.json());
 
-// UI route
+// UI route (Professional Dashboard)
 app.get("/", (req, res) => {
+  const serverTime = new Date().toLocaleString();
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Simple WebApp Dashboard</title>
+      <title>Cloud WebApp Dashboard</title>
       <style>
         body {
           margin: 0;
-          font-family: "Segoe UI", Roboto, Arial, sans-serif;
-          background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+          font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+          background: #f4f6f9;
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          height: 100vh;
+          justify-content: flex-start;
+          min-height: 100vh;
+          padding: 2rem;
+        }
+        header {
+          width: 100%;
+          max-width: 900px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        header h1 {
+          font-size: 1.8rem;
           color: #2c3e50;
+          margin: 0;
+        }
+        .version-badge {
+          background: #3498db;
+          color: #fff;
+          padding: 0.3rem 0.7rem;
+          border-radius: 6px;
+          font-size: 0.9rem;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+          width: 100%;
+          max-width: 900px;
         }
         .card {
           background: #fff;
-          padding: 2rem 3rem;
-          border-radius: 16px;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-          max-width: 450px;
-          width: 100%;
+          border-radius: 12px;
+          padding: 1.5rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
           text-align: center;
-          animation: fadeIn 0.6s ease-in-out;
+          transition: transform 0.2s ease;
         }
-        h1 {
-          font-size: 2rem;
+        .card:hover {
+          transform: translateY(-5px);
+        }
+        .card h2 {
+          font-size: 1.2rem;
           margin-bottom: 0.5rem;
+          color: #34495e;
         }
-        p {
+        .card p {
           font-size: 1rem;
-          margin: 0.5rem 0;
+          color: #555;
         }
-        .badge {
-          display: inline-block;
-          padding: 0.3rem 0.8rem;
-          margin-top: 0.5rem;
+        footer {
+          margin-top: 2rem;
           font-size: 0.9rem;
-          font-weight: bold;
-          color: white;
-          background: #3498db;
-          border-radius: 8px;
-        }
-        .footer {
-          margin-top: 1.5rem;
-          font-size: 0.85rem;
           color: #7f8c8d;
         }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
         button {
-          margin-top: 1.5rem;
+          margin-top: 1rem;
           padding: 0.6rem 1.2rem;
           border: none;
           background: #27ae60;
           color: white;
-          font-size: 1rem;
-          border-radius: 8px;
+          font-size: 0.95rem;
+          border-radius: 6px;
           cursor: pointer;
           transition: background 0.3s ease;
         }
@@ -80,14 +97,49 @@ app.get("/", (req, res) => {
       </style>
     </head>
     <body>
-      <div class="card">
-        <h1>🚀 Simple WebApp</h1>
-        <p>Hello Vishal 👋, your app is running successfully!</p>
-        <p>Version: <span class="badge">${VERSION}</span></p>
-        <p>Server time: ${new Date().toLocaleString()}</p>
-        <button onclick="window.location.href='/healthz'">Check Health</button>
-        <div class="footer">Powered by Express.js • Deployed on AWS ECS Fargate</div>
+      <header>
+        <h1>🚀 Cloud WebApp Dashboard</h1>
+        <span class="version-badge">v${VERSION}</span>
+      </header>
+
+      <div class="grid">
+        <div class="card">
+          <h2>📅 Server Time</h2>
+          <p>${serverTime}</p>
+        </div>
+
+        <div class="card">
+          <h2>⚡ Health Status</h2>
+          <p id="health">Checking...</p>
+          <button onclick="checkHealth()">Check Now</button>
+        </div>
+
+        <div class="card">
+          <h2>📊 Environment</h2>
+          <p>Running on AWS ECS Fargate</p>
+        </div>
       </div>
+
+      <footer>
+        Built with ❤️ using Express.js • Deployed on AWS ECS
+      </footer>
+
+      <script>
+        async function checkHealth() {
+          try {
+            const res = await fetch("/healthz");
+            if (res.ok) {
+              document.getElementById("health").innerText = "✅ Healthy";
+            } else {
+              document.getElementById("health").innerText = "❌ Unhealthy";
+            }
+          } catch (err) {
+            document.getElementById("health").innerText = "⚠️ Error";
+          }
+        }
+        // Auto-check on load
+        checkHealth();
+      </script>
     </body>
     </html>
   `);
@@ -99,5 +151,5 @@ app.get("/readyz", (req, res) => res.status(200).send("ready"));
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ UI running at http://localhost:${PORT}`);
+  console.log(`✅ Dashboard running at http://localhost:${PORT}`);
 });
