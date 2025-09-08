@@ -6,9 +6,17 @@ GitHub Actions with AWS ECR (Elastic Container Registry) and ECS (Elastic Contai
 ---
 ☁️ AWS Setup
 - IAM user with ECR and ECS permissions
+- role 
+- <img width="1902" height="751" alt="role" src="https://github.com/user-attachments/assets/69c7a1ac-d475-4f77-bb4d-6eaa254e85cd" />
+
+-ECR
+
 - <img width="1909" height="788" alt="ecr" src="https://github.com/user-attachments/assets/05597f0c-896b-49c0-8bee-1bf3da7d7b06" />
 
+-ECS
 - <img width="1914" height="759" alt="ecs-cluster" src="https://github.com/user-attachments/assets/ac646e8e-8551-497c-b785-9d2397125ce4" />
+
+-TASK
 -<img width="1920" height="796" alt="ecs-networking" src="https://github.com/user-attachments/assets/63304b70-c1df-4f96-a4b7-a41ac6337f00" />
 
 
